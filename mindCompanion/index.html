@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MindCompanion - Anonymous Community</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar - Desktop -->
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <div class="logo-icon">AI</div>
+            <span class="logo-text">MindCompanion</span>
+          </div>
+        </div>
+        <div class="sidebar-nav">
+          <button class="nav-btn active" onclick="showSection('postsSection')">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              ></path>
+            </svg>
+            Posts
+          </button>
+          <button class="nav-btn" onclick="showSection('chatSection')">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+              ></path>
+            </svg>
+            Chat
+          </button>
+          <button class="nav-btn" onclick="showSection('gamesSection')">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+              ></path>
+            </svg>
+            Games
+          </button>
+        </div>
+        <div class="sidebar-footer">
+          <button class="nav-btn" onclick="toggleTheme()">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+              ></path>
+            </svg>
+            Toggle Theme
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Header -->
+      <div class="mobile-header">
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+          <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+        <div class="logo">
+          <div class="logo-icon">AI</div>
+          <span class="logo-text">MindCompanion</span>
+        </div>
+        <div></div>
+        <!-- Spacer -->
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="mobile-menu">
+        <div class="mobile-menu-content">
+          <div class="mobile-menu-header">
+            <div class="logo">
+              <div class="logo-icon">AI</div>
+              <span class="logo-text">MindCompanion</span>
+            </div>
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+              <svg class="close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <div class="mobile-nav">
+            <button
+              class="nav-btn active"
+              onclick="showSection('postsSection'); toggleMobileMenu()"
+            >
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                ></path>
+              </svg>
+              Posts
+            </button>
+            <button class="nav-btn" onclick="showSection('chatSection'); toggleMobileMenu()">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                ></path>
+              </svg>
+              Chat
+            </button>
+            <button class="nav-btn" onclick="showSection('gamesSection'); toggleMobileMenu()">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
+              </svg>
+              Games
+            </button>
+            <button class="nav-btn" onclick="toggleTheme(); toggleMobileMenu()">
+              <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                ></path>
+              </svg>
+              Toggle Theme
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Posts Section -->
+        <section id="postsSection" class="section active">
+          <h1 class="section-title">Community Posts</h1>
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Share Your Thoughts</h2>
+            </div>
+            <div class="card-body">
+              <div class="post-input">
+                <input type="text" id="postInput" placeholder="Share a joke or thought..." />
+                <button onclick="addPost()">Post</button>
+              </div>
+              <div id="postsList" class="posts-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Chat Section -->
+        <section id="chatSection" class="section">
+          <h1 class="section-title">Anonymous Chat</h1>
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Join the Conversation</h2>
+            </div>
+            <div class="card-body">
+              <div id="chatList" class="chat-list"></div>
+              <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Say something..." />
+                <button onclick="addChatMessage()">Send</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Games Section -->
+        <section id="gamesSection" class="section">
+          <h1 class="section-title">Stress-Relief Games</h1>
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Play to Relax</h2>
+            </div>
+            <div class="card-body">
+              <div class="games-grid">
+                <div class="game-card">
+                  <div class="game-preview happy-face-preview">
+                    <div class="smiley-face">
+                      <div class="eye left"></div>
+                      <div class="eye right"></div>
+                      <div class="mouth"></div>
+                    </div>
+                  </div>
+                  <h3>Happy Face Game</h3>
+                  <p>Click the happy face to reduce stress!</p>
+                  <button class="play-btn" onclick="showGame('happyFaceGame')">Play Now</button>
+                </div>
+                <div class="game-card">
+                  <div class="game-preview doodle-preview">
+                    <canvas id="doodlePreviewCanvas" width="200" height="150"></canvas>
+                  </div>
+                  <h3>Doodle Game</h3>
+                  <p>Draw freely to relax and unwind!</p>
+                  <button class="play-btn" onclick="showGame('doodleGame')">Play Now</button>
+                </div>
+                <div class="game-card">
+                  <div class="game-preview snake-preview">
+                    <div class="snake-body"></div>
+                    <div class="snake-food"></div>
+                  </div>
+                  <h3>Snake Game</h3>
+                  <p>Guide the snake to eat food and relax!</p>
+                  <button class="play-btn" onclick="showGame('snakeGame')">Play Now</button>
+                </div>
+                <div class="game-card">
+                  <div class="game-preview breathing-preview">
+                    <div class="breathing-circle"></div>
+                  </div>
+                  <h3>Breathing Exercise</h3>
+                  <p>Follow the circle to practice deep breathing!</p>
+                  <button class="play-btn" onclick="showGame('breathingGame')">Play Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Game Modals -->
+    <div id="happyFaceGame" class="game-modal">
+      <div class="game-modal-content">
+        <div class="modal-header">
+          <h2>Happy Face Game</h2>
+          <button class="close-btn" onclick="closeGame('happyFaceGame')">×</button>
+        </div>
+        <div class="modal-body">
+          <p>Click the happy face to score points! You have 30 seconds.</p>
+          <div class="game-info">
+            <span>Score: <span id="happyFaceScore">0</span></span>
+            <span>Time Left: <span id="happyFaceTimer">30</span>s</span>
+          </div>
+          <div id="happyFaceArea" class="game-area">
+            <div id="happyFace" class="smiley-face" onclick="clickHappyFace()">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+              <div class="mouth"></div>
+            </div>
+          </div>
+          <button class="start-btn" onclick="startHappyFaceGame()">Start Game</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="doodleGame" class="game-modal">
+      <div class="game-modal-content">
+        <div class="modal-header">
+          <h2>Doodle Game</h2>
+          <button class="close-btn" onclick="closeGame('doodleGame')">×</button>
+        </div>
+        <div class="modal-body">
+          <p>Draw freely to relax and unwind!</p>
+          <div class="doodle-controls">
+            <input type="color" id="doodleColor" value="#000000" />
+            <button onclick="clearDoodleCanvas()">Clear Canvas</button>
+          </div>
+          <canvas id="doodleCanvas" class="doodle-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div id="snakeGame" class="game-modal">
+      <div class="game-modal-content">
+        <div class="modal-header">
+          <h2>Snake Game</h2>
+          <button class="close-btn" onclick="closeGame('snakeGame')">×</button>
+        </div>
+        <div class="modal-body">
+          <p>Use arrow keys to guide the snake to the food!</p>
+          <div class="game-info">
+            <span>Score: <span id="snakeScore">0</span></span>
+          </div>
+          <canvas id="snakeCanvas" class="snake-canvas"></canvas>
+          <button class="start-btn" onclick="startSnakeGame()">Start Game</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="breathingGame" class="game-modal">
+      <div class="game-modal-content">
+        <div class="modal-header">
+          <h2>Breathing Exercise</h2>
+          <button class="close-btn" onclick="closeGame('breathingGame')">×</button>
+        </div>
+        <div class="modal-body">
+          <p>Follow the circle: Inhale as it grows, exhale as it shrinks.</p>
+          <div class="breathing-area">
+            <div id="breathingCircle" class="breathing-circle"></div>
+          </div>
+          <button class="start-btn" onclick="startBreathingExercise()">Start Exercise</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
