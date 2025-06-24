@@ -11,7 +11,7 @@ const Profile = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
       try {
-        const res = await axios.get("http://localhost:5000/api/profile", {
+        const res = await axios.get("https://mental-health-r9h9.onrender.com/api/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setProfile(res.data);

@@ -26,7 +26,7 @@ const EmotionalTimeline = () => {
 
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/chat-timeline",
+          "https://mental-health-r9h9.onrender.com/api/chat-timeline",
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );

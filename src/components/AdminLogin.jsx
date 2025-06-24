@@ -18,7 +18,7 @@ const AdminLogin = () => {
     setError("");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/admin/login", formData);
+      const res = await axios.post("https://mental-health-r9h9.onrender.com/api/admin/login", formData);
       localStorage.setItem("adminToken", res.data.token);
       localStorage.setItem("admin", JSON.stringify(res.data.admin));
       navigate("/admin/dashboard");

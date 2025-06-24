@@ -18,7 +18,7 @@ const Signup = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5001/api/signup", formData);
+      await axios.post("https://mental-health-r9h9.onrender.com/api/signup", formData);
       alert("Signup successful! Please login.");
       navigate("/login");
     } catch (error) {

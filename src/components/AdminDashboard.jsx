@@ -15,7 +15,7 @@ const AdminDashboard = () => {
       const token = localStorage.getItem("adminToken");
       if (!token) return;
       try {
-        const res = await axios.get("http://localhost:5000/api/admin/patients", {
+        const res = await axios.get("https://mental-health-r9h9.onrender.com/api/admin/patients", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPatients(res.data);

@@ -32,7 +32,7 @@ const Login = () => {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.post("http://localhost:5000/api/login", loginFormData);
+      const res = await axios.post("https://mental-health-r9h9.onrender.com/api/login", loginFormData);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       setSuccessMessage("Login successful! Redirecting...");
@@ -50,7 +50,7 @@ const Login = () => {
     setLoading(true);
     setError("");
     try {
-      await axios.post("http://localhost:5001/api/signup", registerFormData);
+      await axios.post("https://mental-health-r9h9.onrender.com/api/signup", registerFormData);
       setSuccessMessage("Signup successful! Please login.");
       setTimeout(() => setActiveTab("login"), 1500);
     } catch (err) {

@@ -43,7 +43,7 @@ const Chat = ({ isFloating = false }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/chat-with-grok",
+        "https://mental-health-r9h9.onrender.com/api/chat-with-grok",
         { message }, // Send the message to the updated endpoint
         { headers: { Authorization: `Bearer ${token}` } }
       );

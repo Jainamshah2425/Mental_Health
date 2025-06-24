@@ -44,7 +44,7 @@ const MindCompanion = () => {
 
   const fetchPosts = async () => {
     const token = localStorage.getItem("token");
-    const res = await axios.get("http://localhost:5000/api/posts", {
+    const res = await axios.get("https://mental-health-r9h9.onrender.com/api/posts", {
       headers: { Authorization: `Bearer ${token}` },
     });
     setPosts(res.data);
@@ -52,7 +52,7 @@ const MindCompanion = () => {
 
   const fetchChatMessages = async () => {
     const token = localStorage.getItem("token");
-    const res = await axios.get("http://localhost:5000/api/chat", {
+    const res = await axios.get("https://mental-health-r9h9.onrender.com/api/chat", {
       headers: { Authorization: `Bearer ${token}` },
     });
     setChatMessages(res.data);
@@ -65,7 +65,7 @@ const MindCompanion = () => {
     if (!postInput.trim()) return;
     const token = localStorage.getItem("token");
     const res = await axios.post(
-      "http://localhost:5000/api/posts",
+      "https://mental-health-r9h9.onrender.com/api/posts",
       { text: postInput },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -76,7 +76,7 @@ const MindCompanion = () => {
   const upvotePost = async id => {
     const token = localStorage.getItem("token");
     const res = await axios.post(
-      `http://localhost:5000/api/posts/${id}/upvote`,
+      `https://mental-health-r9h9.onrender.com/api/posts/${id}/upvote`,
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -86,7 +86,7 @@ const MindCompanion = () => {
   const downvotePost = async id => {
     const token = localStorage.getItem("token");
     const res = await axios.post(
-      `http://localhost:5000/api/posts/${id}/downvote`,
+      `https://mental-health-r9h9.onrender.com/api/posts/${id}/downvote`,
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -97,7 +97,7 @@ const MindCompanion = () => {
     if (!comment.trim()) return;
     const token = localStorage.getItem("token");
     const res = await axios.post(
-      `http://localhost:5000/api/posts/${postId}/comments`,
+      `https://mental-health-r9h9.onrender.com/api/posts/${postId}/comments`,
       { text: comment },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -108,7 +108,7 @@ const MindCompanion = () => {
     if (!chatInput.trim()) return;
     const token = localStorage.getItem("token");
     const res = await axios.post(
-      "http://localhost:5000/api/chat",
+      "https://mental-health-r9h9.onrender.com/api/chat",
       { text: chatInput },
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -127,7 +127,7 @@ const MindCompanion = () => {
     const token = localStorage.getItem("token");
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/run-whatsapp",
+        "https://mental-health-r9h9.onrender.com/api/run-whatsapp",
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

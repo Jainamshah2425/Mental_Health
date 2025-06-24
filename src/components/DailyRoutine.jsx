@@ -68,7 +68,7 @@ const DailyRoutine = () => {
       }
 
       try {
-        const res = await axios.get("http://localhost:5000/api/profile", {
+        const res = await axios.get("https://mental-health-r9h9.onrender.com/api/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUserData(res.data);
@@ -193,7 +193,7 @@ const DailyRoutine = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/update-profile",
+        "https://mental-health-r9h9.onrender.com/api/update-profile",
         { dailyRoutine: editedRoutine },
         { headers: { Authorization: `Bearer ${token}` } }
       );
