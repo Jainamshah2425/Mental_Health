@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 const allowedOrigins = [
-  "http://localhost:3000",
+  "http://localhost:5173",
   "https://mental-health-r9h9.onrender.com",
   "https://mental-health-app-frontend.vercel.app",
 ]
