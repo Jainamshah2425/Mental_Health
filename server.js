@@ -24,7 +24,7 @@ app.use(cors({
     }
   },
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 }));
 const mongoUri = process.env.MONGODB_URI ;
