@@ -24,7 +24,7 @@ const PatientDashboard = () => {
       }
 
       try {
-        const res = await axios.get("http://localhost:5000/api/profile", {
+        const res = await axios.get("https://mental-health-r9h9.onrender.com/api/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUserData(res.data);
