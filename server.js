@@ -14,7 +14,9 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:4173",
   "https://mental-health-r9h9.onrender.com",
-  "https://mental-health-app-frontend.vercel.app",
+  "https://mental-health-jainamshah2425s-projects.vercel.app/",
+   "https://mental-health-pi-beige.vercel.app/",
+  "https://mental-health-git-main-jainamshah2425s-projects.vercel.app/"
 ]
 app.use(cors({
   origin: (origin, callback) => {
