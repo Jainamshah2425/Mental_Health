@@ -24,7 +24,7 @@ const Therapist = () => {
   const audioRef = useRef(null);
   const streamRef = useRef(null);
 
-  const API_BASE_URL = "https://jainamshah2425-mh.hf.space/";
+  const API_BASE_URL = "https://jainamshah2425-mh.hf.space";
 
   // Initialize component
   useEffect(() => {
