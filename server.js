@@ -14,21 +14,27 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:4173",
   "https://mental-health-r9h9.onrender.com",
-  "https://mental-health-jainamshah2425s-projects.vercel.app/",
-   "https://mental-health-pi-beige.vercel.app/",
-  "https://mental-health-git-main-jainamshah2425s-projects.vercel.app/"
-]
+  "https://mental-health-jainamshah2425s-projects.vercel.app", // Removed trailing slash
+  "https://mental-health-pi-beige.vercel.app",
+  "https://mental-health-git-main-jainamshah2425s-projects.vercel.app"
+];
+
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log('Blocked origin:', origin); // For debugging
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
+  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
 }));
 const mongoUri = process.env.MONGODB_URI ;
 
