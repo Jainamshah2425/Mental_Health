@@ -48,12 +48,22 @@ const Chat = ({ isFloating = false }) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
+      let aiContent = typeof res.data.response === 'string' ? res.data.response : res.data.response.response;
+
+      // Clean up if it contains the JSON dump at the end
+      if (typeof aiContent === 'string') {
+        // Look for the start of the JSON block using a regex to handle spacing variations
+        const jsonMatch = aiContent.match(/\{\s*"response"\s*:/);
+        if (jsonMatch && jsonMatch.index !== undefined) {
+          aiContent = aiContent.substring(0, jsonMatch.index).trim();
+        }
+      }
+
       setResponses(prev => [
         ...prev,
         {
           type: "ai",
-          content: typeof res.data.response === 'string' ? res.data.response : res.data.response.response,
-
+          content: aiContent,
           distressScore: res.data.distressScore,
         },
       ]);
@@ -98,9 +108,8 @@ const Chat = ({ isFloating = false }) => {
 
   return (
     <div
-      className={`bg-white rounded-lg shadow-md border-none overflow-hidden ${
-        isFloating ? "h-[500px]" : "h-[600px]"
-      }`}
+      className={`bg-white rounded-lg shadow-md border-none overflow-hidden ${isFloating ? "h-[500px]" : "h-[600px]"
+        }`}
     >
       <div className="p-4 border-b flex items-center">
         <div className="h-8 w-8 rounded-full bg-blue-600 text-white flex items-center justify-center mr-2 text-sm font-bold">
@@ -136,13 +145,12 @@ const Chat = ({ isFloating = false }) => {
               )}
 
               <div
-                className={`max-w-[80%] p-3 rounded-lg ${
-                  item.type === "user"
-                    ? "bg-blue-600 text-white"
-                    : item.type === "error"
+                className={`max-w-[80%] p-3 rounded-lg ${item.type === "user"
+                  ? "bg-blue-600 text-white"
+                  : item.type === "error"
                     ? "bg-red-100 text-red-800"
                     : "bg-gray-100"
-                }`}
+                  }`}
               >
                 <p>{item.content}</p>
 
@@ -219,11 +227,10 @@ const Chat = ({ isFloating = false }) => {
         <form onSubmit={handleSubmit} className="flex w-full space-x-2">
           <button
             type="button"
-            className={`p-2 rounded-full ${
-              isListening
-                ? "bg-blue-600 text-white animate-pulse"
-                : "border border-gray-300 text-gray-500"
-            }`}
+            className={`p-2 rounded-full ${isListening
+              ? "bg-blue-600 text-white animate-pulse"
+              : "border border-gray-300 text-gray-500"
+              }`}
             onClick={toggleListening}
             title="Voice input"
           >
@@ -256,11 +263,10 @@ const Chat = ({ isFloating = false }) => {
 
           <button
             type="submit"
-            className={`p-2 rounded-full ${
-              !message.trim() || isLoading || isListening
-                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                : "bg-blue-600 text-white"
-            }`}
+            className={`p-2 rounded-full ${!message.trim() || isLoading || isListening
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-blue-600 text-white"
+              }`}
             disabled={!message.trim() || isLoading || isListening}
           >
             {isLoading ? (
