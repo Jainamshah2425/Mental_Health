@@ -1,36 +1,70 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, LayoutDashboard, Calendar, MessageSquare, User, LogOut, Activity, Brain, ChevronDown } from "lucide-react";
+import { Menu, X, LayoutDashboard, Calendar, MessageSquare, User, LogOut, Activity, Brain, ChevronDown, Home, Info } from "lucide-react";
+
+// Check if JWT token is valid and not expired
+const isTokenValid = (token) => {
+    if (!token) return false;
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        // Check if token has expired (exp is in seconds, Date.now() is in ms)
+        return payload.exp * 1000 > Date.now();
+    } catch {
+        return false;
+    }
+};
 
 const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
-    const [user, setUser] = useState(() => JSON.parse(localStorage.getItem("user")));
-    const [admin, setAdmin] = useState(() => JSON.parse(localStorage.getItem("admin")));
+    const [user, setUser] = useState(null);
+    const [admin, setAdmin] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
 
     // Check auth state on mount and route change
     useEffect(() => {
-        const userData = JSON.parse(localStorage.getItem("user"));
-        const adminData = JSON.parse(localStorage.getItem("admin"));
+        const checkAuth = () => {
+            const token = localStorage.getItem("token");
+            const adminToken = localStorage.getItem("adminToken");
+            const userData = JSON.parse(localStorage.getItem("user"));
+            const adminData = JSON.parse(localStorage.getItem("admin"));
 
-        // Only update state if it actually changed to prevent unnecessary re-renders
-        // (Though simplistic comparison is fine for this scale)
-        if (JSON.stringify(userData) !== JSON.stringify(user)) {
-            setUser(userData);
-        }
-        if (JSON.stringify(adminData) !== JSON.stringify(admin)) {
-            setAdmin(adminData);
-        }
+            // Validate user authentication (token must exist AND be valid AND user data must exist)
+            if (token && userData && isTokenValid(token)) {
+                setUser(userData);
+                setIsAuthenticated(true);
+            } else {
+                // Clear all stale data if token is missing or expired
+                localStorage.removeItem("user");
+                localStorage.removeItem("token");
+                setUser(null);
+                setIsAuthenticated(false);
+            }
 
+            // Validate admin authentication (token must exist AND be valid AND admin data must exist)
+            if (adminToken && adminData && isTokenValid(adminToken)) {
+                setAdmin(adminData);
+                setIsAdminAuthenticated(true);
+            } else {
+                localStorage.removeItem("admin");
+                localStorage.removeItem("adminToken");
+                setAdmin(null);
+                setIsAdminAuthenticated(false);
+            }
+        };
+
+        checkAuth();
         setIsOpen(false);
-    }, [location.pathname]); // Dependency on pathname ensures update on navigation
+    }, [location.pathname]);
 
     const handleLogout = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
         setUser(null);
+        setIsAuthenticated(false);
         navigate("/login");
     };
 
@@ -38,14 +72,15 @@ const Navbar = () => {
         localStorage.removeItem("admin");
         localStorage.removeItem("adminToken");
         setAdmin(null);
+        setIsAdminAuthenticated(false);
         navigate("/admin/login");
     };
 
     return (
         <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-300">
             <div className="container mx-auto px-6 h-16 flex justify-between items-center">
-                {/* Logo */}
-                <Link to="/" className="flex items-center gap-3 group">
+                {/* Logo - redirects to dashboard if logged in, otherwise home */}
+                <Link to={isAuthenticated ? "/dashboard" : isAdminAuthenticated ? "/admin/dashboard" : "/"} className="flex items-center gap-3 group">
                     <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-blue-200 group-hover:scale-105 transition-transform duration-200">
                         <Brain className="w-5 h-5" />
                     </div>
@@ -56,7 +91,7 @@ const Navbar = () => {
 
                 {/* Desktop Navigation */}
                 <div className="hidden md:flex items-center gap-1">
-                    {admin ? (
+                    {isAdminAuthenticated && admin ? (
                         <>
                             <NavLink to="/admin/dashboard" icon={LayoutDashboard}>Admin Dashboard</NavLink>
                             <div className="w-px h-6 bg-gray-200 mx-3" />
@@ -68,7 +103,7 @@ const Navbar = () => {
                                 Logout
                             </button>
                         </>
-                    ) : user ? (
+                    ) : isAuthenticated && user ? (
                         <>
                             <div className="flex items-center bg-gray-50/50 p-1 rounded-xl border border-gray-100 mr-2">
                                 <NavLink to="/dashboard" icon={LayoutDashboard}>Dashboard</NavLink>
@@ -98,11 +133,11 @@ const Navbar = () => {
                         </>
                     ) : (
                         <>
-                            <Link to="/login" className="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:text-blue-600 transition-colors">
+                            {/* Non-authenticated: Show Home and Login only */}
+                            <NavLink to="/" icon={Home}>Home</NavLink>
+                            <div className="w-px h-6 bg-gray-200 mx-3" />
+                            <Link to="/login" className="px-5 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 hover:shadow-blue-300 hover:-translate-y-0.5">
                                 Login
-                            </Link>
-                            <Link to="/signup" className="ml-2 px-5 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 hover:shadow-blue-300 hover:-translate-y-0.5">
-                                Get Started
                             </Link>
                         </>
                     )}
@@ -127,7 +162,7 @@ const Navbar = () => {
                         className="md:hidden bg-white border-b border-gray-100 overflow-hidden"
                     >
                         <div className="px-4 py-4 space-y-2">
-                            {admin ? (
+                            {isAdminAuthenticated && admin ? (
                                 <>
                                     <MobileNavLink to="/admin/dashboard" icon={LayoutDashboard} onClick={() => setIsOpen(false)}>Admin Dashboard</MobileNavLink>
                                     <button
@@ -138,7 +173,7 @@ const Navbar = () => {
                                         Logout
                                     </button>
                                 </>
-                            ) : user ? (
+                            ) : isAuthenticated && user ? (
                                 <>
                                     <div className="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-xl mb-4">
                                         <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold text-lg shadow-md">
@@ -163,14 +198,14 @@ const Navbar = () => {
                                     </button>
                                 </>
                             ) : (
-                                <div className="grid grid-cols-2 gap-3 pt-2">
-                                    <Link to="/login" onClick={() => setIsOpen(false)} className="flex justify-center items-center px-4 py-3 text-sm font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-xl transition-colors">
+                                <>
+                                    {/* Non-authenticated mobile: Show Home and Login only */}
+                                    <MobileNavLink to="/" icon={Home} onClick={() => setIsOpen(false)}>Home</MobileNavLink>
+                                    <div className="border-t border-gray-100 my-3" />
+                                    <Link to="/login" onClick={() => setIsOpen(false)} className="w-full flex justify-center items-center px-4 py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md transition-colors">
                                         Login
                                     </Link>
-                                    <Link to="/signup" onClick={() => setIsOpen(false)} className="flex justify-center items-center px-4 py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md transition-colors">
-                                        Get Started
-                                    </Link>
-                                </div>
+                                </>
                             )}
                         </div>
                     </motion.div>
